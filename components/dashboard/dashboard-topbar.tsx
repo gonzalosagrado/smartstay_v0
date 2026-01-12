@@ -12,10 +12,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { createClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation"
 import { useDashboard } from "@/contexts/dashboard-context"
 
 export function DashboardTopbar() {
   const { user } = useDashboard()
+  const supabase = createClient()
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    // Redirect to the landing page
+    window.location.href = "https://smartstay-landing.vercel.app"
+  }
 
   return (
     <header className="flex h-16 shrink-0 items-center justify-between border-b bg-background px-4">
@@ -52,7 +62,7 @@ export function DashboardTopbar() {
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">
+            <DropdownMenuItem className="text-destructive cursor-pointer" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>

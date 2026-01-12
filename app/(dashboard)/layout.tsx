@@ -20,7 +20,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   }
 
   // Fetch hotel data
-  const { data: hotelData } = await supabase.from("hotels").select("*").eq("user_id", authUser.id).single()
+  const { data: hotelData } = await supabase.from("hotels").select("*").eq("user_id", authUser.id).maybeSingle()
 
   // Map to Dashboard User type
   const dashboardUser = {

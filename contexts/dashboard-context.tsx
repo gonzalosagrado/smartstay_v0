@@ -12,11 +12,11 @@ interface DashboardContextType {
   user: User
   links: Link[]
   activities: Activity[]
-  updateHotel: (hotel: Partial<Hotel>) => void
-  addLink: (link: Omit<Link, "id" | "createdAt" | "order">) => void
-  updateLink: (id: string, link: Partial<Link>) => void
-  deleteLink: (id: string) => void
-  reorderLinks: (links: Link[]) => void
+  updateHotel: (hotel: Partial<Hotel>) => Promise<void>
+  addLink: (link: Omit<Link, "id" | "createdAt" | "order">) => Promise<void>
+  updateLink: (id: string, link: Partial<Link>) => Promise<void>
+  deleteLink: (id: string) => Promise<void>
+  reorderLinks: (links: Link[]) => Promise<void>
   addActivity: (activity: Omit<Activity, "id" | "createdAt">) => void
   updateActivity: (id: string, activity: Partial<Activity>) => void
   deleteActivity: (id: string) => void
