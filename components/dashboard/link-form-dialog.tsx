@@ -125,11 +125,11 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
               name="url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL</FormLabel>
+                  <FormLabel>URL or Content</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://example.com" {...field} />
+                    <Input placeholder="https://... or WiFi Password" {...field} />
                   </FormControl>
-                  <FormDescription>The destination URL for this link</FormDescription>
+                  <FormDescription>The destination URL or text content (e.g. '1234')</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

@@ -3,7 +3,7 @@ import { z } from "zod"
 // Link validation schema
 export const linkSchema = z.object({
   title: z.string().min(1, "Title is required").max(100, "Title too long"),
-  url: z.string().url("Must be a valid URL"),
+  url: z.string().min(1, "Value is required"),
   description: z.string().max(200, "Description too long").optional(),
   icon: z.string().optional(),
   category: z.enum(["hotel", "activities", "contact"]),
