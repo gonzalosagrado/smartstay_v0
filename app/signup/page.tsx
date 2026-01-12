@@ -40,6 +40,15 @@ export default function SignupPage() {
                 return
             }
 
+            // Check if email confirmation is required (no session returned)
+            if (data.user && !data.session) {
+                toast.success("Cuenta creada. Por favor verifica tu email.", {
+                    description: "Te hemos enviado un enlace de confirmación.",
+                    duration: 5000,
+                })
+                return
+            }
+
             toast.success("Cuenta creada exitosamente", {
                 description: "Redirigiendo...",
             })
