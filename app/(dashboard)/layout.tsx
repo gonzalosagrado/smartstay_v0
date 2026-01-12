@@ -48,8 +48,41 @@ export default async function DashboardLayout({ children }: { children: React.Re
     }
     : null
 
+  // Fetch links (if hotel exists)
+  // Note: We access the 'hotelData' variable which is declared in the previous scope.
+  // Ideally, we should fetch links AFTER checking if hotelData exists.
+
+  let dashboardLinks: any[] = []
+
+  if (hotelData) {
+    const { data: linksData } = await supabase
+      .from("links")
+      .select("*")
+      .eq("hotel_id", hotelData.id)
+      .order("order_index")
+
+    if (linksData) {
+      dashboardLinks = linksData.map(l => ({
+        id: l.id,
+        title: l.title,
+        url: l.url,
+        description: l.description || "",
+        icon: l.icon || "Link2",
+        category: l.category,
+        isActive: l.is_active,
+        order: l.order_index,
+        createdAt: new Date(l.created_at)
+      }))
+    }
+  }
+
   return (
-    <DashboardProvider initialUser={dashboardUser} initialHotel={dashboardHotel}>
+    <DashboardProvider
+      initialUser={dashboardUser}
+      initialHotel={dashboardHotel}
+      initialLinks={dashboardLinks}
+      initialActivities={[]}
+    >
       <SidebarProvider defaultOpen>
         <DashboardSidebar />
         <SidebarInset>
