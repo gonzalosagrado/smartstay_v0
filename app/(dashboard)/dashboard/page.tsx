@@ -62,8 +62,8 @@ export default async function DashboardPage() {
         <p className="text-muted-foreground">Welcome back! Here's what's happening with {hotel.name}.</p>
       </div>
 
-      {/* Stats Grid - Currently static/placeholder logic for clicks since we don't have analytics table yet */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {/* Stats Grid */}
+      <div className="grid gap-4 md:grid-cols-2">
         <StatsCard
           title="Total Links"
           value={links?.length || 0}
@@ -74,22 +74,6 @@ export default async function DashboardPage() {
           title="Active Links"
           value={activeLinksCount}
           icon={Activity}
-          className="hover:shadow-lg transition-shadow"
-        />
-        <StatsCard
-          title="Weekly Clicks"
-          value={0}
-          icon={MousePointerClick}
-          trend={0}
-          trendLabel="vs last week"
-          className="hover:shadow-lg transition-shadow"
-        />
-        <StatsCard
-          title="Total Activities"
-          value={0}
-          icon={TrendingUp}
-          trend={0}
-          trendLabel="visitor growth"
           className="hover:shadow-lg transition-shadow"
         />
       </div>
@@ -160,7 +144,7 @@ export default async function DashboardPage() {
           <CardDescription>Common tasks to manage your hotel portal</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-3">
             <Button variant="outline" asChild className="justify-start bg-transparent">
               <Link href="/dashboard/links">
                 <LinkIcon className="mr-2 h-4 w-4" />
@@ -171,12 +155,6 @@ export default async function DashboardPage() {
               <Link href="/dashboard/activities">
                 <Activity className="mr-2 h-4 w-4" />
                 Add Activity
-              </Link>
-            </Button>
-            <Button variant="outline" asChild className="justify-start bg-transparent">
-              <Link href="/dashboard/analytics">
-                <TrendingUp className="mr-2 h-4 w-4" />
-                View Analytics
               </Link>
             </Button>
             <Button variant="outline" asChild className="justify-start bg-transparent">
