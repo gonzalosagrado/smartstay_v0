@@ -1,51 +1,94 @@
-import { LinkIcon, Activity, MousePointerClick, TrendingUp } from "lucide-react"
+import { LinkIcon, Activity, MousePointerClick, TrendingUp, PlusCircle } from "lucide-react"
 import { StatsCard } from "@/components/dashboard/stats-card"
 import { QRGenerator } from "@/components/dashboard/qr-generator"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { mockDashboardStats, mockHotel, mockLinks } from "@/lib/mock-data"
 import Link from "next/link"
 import { Eye, ExternalLink } from "lucide-react"
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
-export default function DashboardPage() {
-  const stats = mockDashboardStats
-  const portalUrl = `https://smartstay.app/${mockHotel.id}`
+export default async function DashboardPage() {
+  const supabase = await createClient()
+
+  // 1. Get User
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/login")
+  }
+
+  // 2. Get Hotel Data
+  const { data: hotel } = await supabase.from("hotels").select("*").eq("user_id", user.id).single()
+
+  // 3. Get Links (if hotel exists)
+  const { data: links } = hotel
+    ? await supabase.from("links").select("*").eq("hotel_id", hotel.id).order("order_index")
+    : { data: [] }
+
+  const activeLinksCount = links?.filter((l) => l.is_active).length || 0
+
+  // Empty State: User has no hotel created yet
+  if (!hotel) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4 text-center">
+        <div className="p-4 rounded-full bg-blue-100">
+          <Activity className="w-12 h-12 text-blue-600" />
+        </div>
+        <h2 className="text-2xl font-bold tracking-tight">Welcome, {user.email}</h2>
+        <p className="text-muted-foreground max-w-md">
+          You haven't created your hotel profile yet. Set up your property details to get started.
+        </p>
+        <Button size="lg" asChild>
+          <Link href="/dashboard/settings">
+            <PlusCircle className="mr-2 h-4 w-4" />
+            Create Hotel Profile
+          </Link>
+        </Button>
+      </div>
+    )
+  }
+
+  // Real Data State
+  const portalUrl = `https://smartstay.app/${hotel.id}` // In real app, this might use a slug
 
   return (
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight">Dashboard Overview</h2>
-        <p className="text-muted-foreground">Welcome back! Here's what's happening with your hotel.</p>
+        <p className="text-muted-foreground">Welcome back! Here's what's happening with {hotel.name}.</p>
       </div>
 
-      {/* Stats Grid */}
+      {/* Stats Grid - Currently static/placeholder logic for clicks since we don't have analytics table yet */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Total Links"
-          value={stats.totalLinks}
+          value={links?.length || 0}
           icon={LinkIcon}
           className="hover:shadow-lg transition-shadow"
         />
         <StatsCard
           title="Active Links"
-          value={stats.activeLinks}
+          value={activeLinksCount}
           icon={Activity}
           className="hover:shadow-lg transition-shadow"
         />
         <StatsCard
           title="Weekly Clicks"
-          value={stats.weeklyClicks}
+          value={0}
           icon={MousePointerClick}
-          trend={stats.clickTrend}
+          trend={0}
           trendLabel="vs last week"
           className="hover:shadow-lg transition-shadow"
         />
         <StatsCard
           title="Total Activities"
-          value={stats.totalActivities}
+          value={0}
           icon={TrendingUp}
-          trend={stats.visitorTrend}
+          trend={0}
           trendLabel="visitor growth"
           className="hover:shadow-lg transition-shadow"
         />
@@ -68,12 +111,12 @@ export default function DashboardPage() {
           <CardContent className="space-y-4">
             <div className="rounded-lg border bg-muted/30 p-4">
               <div className="mb-3 flex items-center justify-between">
-                <h3 className="font-semibold">{mockHotel.name}</h3>
-                <Badge variant="outline">{stats.activeLinks} links</Badge>
+                <h3 className="font-semibold">{hotel.name}</h3>
+                <Badge variant="outline">{activeLinksCount} links</Badge>
               </div>
-              <p className="mb-4 text-sm text-muted-foreground">{mockHotel.welcomeMessage}</p>
+              <p className="mb-4 text-sm text-muted-foreground">{hotel.welcome_message || "Welcome to our hotel"}</p>
               <div className="space-y-2">
-                {mockLinks.slice(0, 3).map((link) => (
+                {links?.slice(0, 3).map((link) => (
                   <div
                     key={link.id}
                     className="flex items-center justify-between rounded-md border bg-background p-2 text-sm"
@@ -82,7 +125,14 @@ export default function DashboardPage() {
                     <ExternalLink className="h-3 w-3 text-muted-foreground" />
                   </div>
                 ))}
-                <p className="text-xs text-center text-muted-foreground pt-2">+{stats.activeLinks - 3} more links</p>
+                {activeLinksCount > 3 && (
+                  <p className="text-xs text-center text-muted-foreground pt-2">
+                    +{activeLinksCount - 3} more links
+                  </p>
+                )}
+                {activeLinksCount === 0 && (
+                  <p className="text-xs text-center text-muted-foreground pt-2">No links added yet.</p>
+                )}
               </div>
             </div>
             <div className="flex gap-2">
@@ -100,7 +150,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* QR Code */}
-        <QRGenerator url={portalUrl} hotelName={mockHotel.name} />
+        <QRGenerator url={portalUrl} hotelName={hotel.name} />
       </div>
 
       {/* Quick Actions */}
@@ -130,7 +180,7 @@ export default function DashboardPage() {
               </Link>
             </Button>
             <Button variant="outline" asChild className="justify-start bg-transparent">
-              <Link href="/dashboard/branding">
+              <Link href="/dashboard/settings">
                 <Eye className="mr-2 h-4 w-4" />
                 Customize Design
               </Link>
