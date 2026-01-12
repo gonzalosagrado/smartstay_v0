@@ -38,8 +38,8 @@ export default function LoginPage() {
                 description: "Redirigiendo al dashboard...",
             })
 
-            router.push("/dashboard")
-            router.refresh()
+            // Force hard redirect to ensure cookies are sent to server
+            window.location.href = "/dashboard"
         } catch (error) {
             toast.error("Algo salió mal", {
                 description: "Por favor intenta de nuevo más tarde",
