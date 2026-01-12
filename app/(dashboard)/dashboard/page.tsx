@@ -53,7 +53,8 @@ export default async function DashboardPage() {
   }
 
   // Real Data State
-  const portalUrl = `https://smartstay.app/${hotel.id}` // In real app, this might use a slug
+  const portalBaseUrl = process.env.NEXT_PUBLIC_PORTAL_URL || "https://smartstay-portal-b2c.vercel.app"
+  const portalUrl = `${portalBaseUrl}/${hotel.id}`
 
   return (
     <div className="space-y-6">
