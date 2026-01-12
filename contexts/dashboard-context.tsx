@@ -23,9 +23,17 @@ interface DashboardContextType {
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined)
 
-export function DashboardProvider({ children }: { children: React.ReactNode }) {
-  const [hotel, setHotel] = useState<Hotel>(mockHotel)
-  const [user, setUser] = useState<User>(mockUser)
+export function DashboardProvider({
+  children,
+  initialUser,
+  initialHotel,
+}: {
+  children: React.ReactNode
+  initialUser: User
+  initialHotel: Hotel | null
+}) {
+  const [hotel, setHotel] = useState<Hotel>(initialHotel || mockHotel)
+  const [user, setUser] = useState<User>(initialUser)
   const [links, setLinks] = useState<Link[]>(mockLinks)
   const [activities, setActivities] = useState<Activity[]>(mockActivities)
 
