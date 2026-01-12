@@ -13,11 +13,13 @@ import { toast } from "sonner"
 import { Loader2, Building, Save } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
+import { useDashboard } from "@/contexts/dashboard-context"
 
 export default function SettingsPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const router = useRouter()
+  const { updateHotel } = useDashboard()
   const supabase = createClient()
 
   const form = useForm<BrandingFormData>({
@@ -107,6 +109,20 @@ export default function SettingsPage() {
           .eq("id", existingHotel.id)
 
         if (error) throw error
+        if (error) throw error
+
+        // Update local context immediately for UI feedback
+        updateHotel({
+          name: data.name,
+          primaryColor: data.primaryColor,
+          logo: data.logo || null,
+          address: data.address,
+          phone: data.phone,
+          email: data.email,
+          description: data.description,
+          welcomeMessage: data.welcomeMessage
+        })
+
         toast.success("Hotel profile updated successfully")
       } else {
         // Insert
