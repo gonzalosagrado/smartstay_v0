@@ -220,28 +220,26 @@ export default function SettingsPage() {
                   name="primaryColor"
                   render={({ field }) => (
                     <FormItem>
-                      <FormItem>
-                        <FormLabel>Color Principal (Hex)</FormLabel>
-                        <div className="flex gap-2">
-                          <div
-                            className="w-10 h-10 rounded border shadow-sm"
-                            style={{ backgroundColor: field.value }}
-                          />
-                          <FormControl>
-                            <Input placeholder="#3B82F6" {...field} />
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
+                      <FormLabel>Color Principal (Hex)</FormLabel>
+                      <div className="flex gap-2">
+                        <div
+                          className="w-10 h-10 rounded border shadow-sm"
+                          style={{ backgroundColor: field.value }}
+                        />
+                        <FormControl>
+                          <Input placeholder="#3B82F6" {...field} />
+                        </FormControl>
+                      </div>
+                      <FormMessage />
+                    </FormItem>
                   )}
                 />
 
-                      <FormField
-                        control={form.control}
-                        name="logo"
-                        render={({ field }) => (
+                <FormField
+                  control={form.control}
+                  name="logo"
+                  render={({ field }) => (
                     <FormItem>
-                  <FormItem>
                       <FormLabel>Logo URL (Opcional)</FormLabel>
                       <FormControl>
                         <Input placeholder="https://..." {...field} />
@@ -270,8 +268,8 @@ export default function SettingsPage() {
 
             </form>
           </Form>
-            </CardContent>
-          </Card>
-        </div>
-        )
+        </CardContent>
+      </Card>
+    </div >
+  )
 }
