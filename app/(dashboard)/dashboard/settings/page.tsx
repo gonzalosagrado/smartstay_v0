@@ -78,76 +78,19 @@ export default function SettingsPage() {
   const onSubmit = async (data: BrandingFormData) => {
     setIsSaving(true)
     try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        toast.error("You must be logged in")
-        return
-      }
-
-      // Check if hotel exists to decide INSERT vs UPDATE
-      const { data: existingHotel } = await supabase
-        .from("hotels")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle()
-
-      if (existingHotel) {
-        // Update
-        const { error } = await supabase
-          .from("hotels")
-          .update({
-            name: data.name,
-            description: data.description,
-            address: data.address,
-            phone: data.phone,
-            email: data.email,
-            welcome_message: data.welcomeMessage,
-            primary_color: data.primaryColor,
-            logo: data.logo || null,
-            updated_at: new Date().toISOString(),
-          })
-          .eq("id", existingHotel.id)
-
-        if (error) throw error
-        if (error) throw error
-
-        // Update local context immediately for UI feedback
-        updateHotel({
-          name: data.name,
-          primaryColor: data.primaryColor,
-          logo: data.logo || null,
-          address: data.address,
-          phone: data.phone,
-          email: data.email,
-          description: data.description,
-          welcomeMessage: data.welcomeMessage
-        })
-
-        toast.success("Hotel profile updated successfully")
-      } else {
-        // Insert
-        const { error } = await supabase
-          .from("hotels")
-          .insert({
-            user_id: user.id,
-            name: data.name,
-            description: data.description,
-            address: data.address,
-            phone: data.phone,
-            email: data.email,
-            welcome_message: data.welcomeMessage,
-            primary_color: data.primaryColor,
-            logo: data.logo || null,
-          })
-
-        if (error) throw error
-        toast.success("Hotel profile created successfully")
-        router.refresh() // Refresh to update dashboard state
-      }
-
+      await updateHotel({
+        name: data.name,
+        description: data.description,
+        address: data.address,
+        phone: data.phone,
+        email: data.email,
+        welcomeMessage: data.welcomeMessage,
+        primaryColor: data.primaryColor,
+        logo: data.logo || null,
+      })
+      // Toast is now handled in Context
     } catch (error) {
       console.error("Error saving hotel:", error)
-      toast.error("Failed to save changes. Please try again.")
     } finally {
       setIsSaving(false)
     }

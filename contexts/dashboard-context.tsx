@@ -44,10 +44,61 @@ export function DashboardProvider({
   const [activities, setActivities] = useState<Activity[]>(initialActivities)
   const supabase = createClient()
 
-  const updateHotel = useCallback((updates: Partial<Hotel>) => {
-    // In a real app we would persist this too
+  const updateHotel = useCallback(async (updates: Partial<Hotel>) => {
+    // 1. Optimistic Update
     setHotel((prev) => ({ ...prev, ...updates, updatedAt: new Date() }))
-  }, [])
+
+    if (!user?.id) return
+
+    try {
+      // 2. Check if hotel exists in DB (to decide Update vs Insert)
+      const { data: existing } = await supabase
+        .from('hotels')
+        .select('id')
+        .eq('user_id', user.id)
+        .maybeSingle()
+
+      const payload = {
+        name: updates.name,
+        description: updates.description,
+        address: updates.address,
+        phone: updates.phone,
+        email: updates.email,
+        welcome_message: updates.welcomeMessage,
+        primary_color: updates.primaryColor,
+        logo: updates.logo,
+        updated_at: new Date().toISOString(),
+      }
+
+      // Clean undefined values
+      Object.keys(payload).forEach(key => payload[key as keyof typeof payload] === undefined && delete payload[key as keyof typeof payload])
+
+      if (existing) {
+        const { error } = await supabase
+          .from('hotels')
+          .update(payload)
+          .eq('id', existing.id)
+
+        if (error) throw error
+        toast.success("Hotel saved successfully")
+      } else {
+        const { error } = await supabase
+          .from('hotels')
+          .insert({
+            ...payload,
+            user_id: user.id,
+            // Ensure required fields have defaults if missing from updates
+            name: updates.name || "My Hotel",
+          })
+
+        if (error) throw error
+        toast.success("Hotel created successfully")
+      }
+    } catch (error) {
+      console.error("Error saving hotel:", error)
+      toast.error("Failed to save changes")
+    }
+  }, [user?.id, supabase])
 
   const addLink = useCallback(async (newLink: Omit<Link, "id" | "createdAt" | "order">) => {
     // 1. Optimistic Update
