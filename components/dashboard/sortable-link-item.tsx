@@ -40,7 +40,7 @@ export function SortableLinkItem({ link }: SortableLinkItemProps) {
 
   const handleDelete = () => {
     deleteLink(link.id)
-    toast.success("Link deleted successfully")
+    toast.success("Link eliminado correctamente")
   }
 
   return (
@@ -66,7 +66,7 @@ export function SortableLinkItem({ link }: SortableLinkItemProps) {
             </Badge>
             {!link.isActive && (
               <Badge variant="outline" className="text-xs">
-                Inactive
+                Inactivo
               </Badge>
             )}
           </div>
@@ -99,15 +99,15 @@ export function SortableLinkItem({ link }: SortableLinkItemProps) {
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete Link?</AlertDialogTitle>
+                <AlertDialogTitle>¿Eliminar Link?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  Are you sure you want to delete "{link.title}"? This action cannot be undone.
+                  ¿Estás seguro de que querés eliminar "{link.title}"? Esta acción no se puede deshacer.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
                 <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
-                  Delete
+                  Eliminar
                 </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>

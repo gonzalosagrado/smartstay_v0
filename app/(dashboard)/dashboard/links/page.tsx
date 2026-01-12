@@ -58,8 +58,8 @@ export default function LinksPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight">Links Manager</h2>
-          <p className="text-muted-foreground">Manage and organize links for your guest portal</p>
+          <h2 className="text-3xl font-bold tracking-tight">Gestor de Links</h2>
+          <p className="text-muted-foreground">Administra y organiza los links de tu portal de huéspedes</p>
         </div>
         <LinkFormDialog />
       </div>
@@ -68,8 +68,8 @@ export default function LinksPage() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>All Links</CardTitle>
-              <CardDescription>Drag and drop to reorder links</CardDescription>
+              <CardTitle>Mis Links</CardTitle>
+              <CardDescription>Arrastra y suelta para reordenar</CardDescription>
             </div>
             <Badge variant="secondary">
               <Link2 className="mr-1 h-3 w-3" />
@@ -80,18 +80,18 @@ export default function LinksPage() {
         <CardContent>
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)}>
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="all">All ({links.length})</TabsTrigger>
-              <TabsTrigger value="hotel">Hotel ({linksByCategory.hotel})</TabsTrigger>
-              <TabsTrigger value="activities">Activities ({linksByCategory.activities})</TabsTrigger>
-              <TabsTrigger value="contact">Contact ({linksByCategory.contact})</TabsTrigger>
+              <TabsTrigger value="all">Todos ({links.length})</TabsTrigger>
+              <TabsTrigger value="hotel">Servicios ({linksByCategory.hotel})</TabsTrigger>
+              <TabsTrigger value="activities">Actividades ({linksByCategory.activities})</TabsTrigger>
+              <TabsTrigger value="contact">Contacto ({linksByCategory.contact})</TabsTrigger>
             </TabsList>
 
             <TabsContent value={activeTab} className="mt-6">
               {filteredLinks.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <Link2 className="h-12 w-12 text-muted-foreground/50 mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No links yet</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Get started by creating your first link</p>
+                  <h3 className="text-lg font-semibold mb-2">No hay links aún</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Comienza creando tu primer link</p>
                   <LinkFormDialog />
                 </div>
               ) : (

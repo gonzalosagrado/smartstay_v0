@@ -38,14 +38,14 @@ export default async function DashboardPage() {
         <div className="p-4 rounded-full bg-blue-100">
           <Activity className="w-12 h-12 text-blue-600" />
         </div>
-        <h2 className="text-2xl font-bold tracking-tight">Welcome, {user.email}</h2>
+        <h2 className="text-2xl font-bold tracking-tight">Bienvenido, {user.email}</h2>
         <p className="text-muted-foreground max-w-md">
-          You haven't created your hotel profile yet. Set up your property details to get started.
+          Aún no has configurado tu hotel. Agrega los detalles de tu propiedad para comenzar.
         </p>
         <Button size="lg" asChild>
           <Link href="/dashboard/settings">
             <PlusCircle className="mr-2 h-4 w-4" />
-            Create Hotel Profile
+            Crear Perfil del Hotel
           </Link>
         </Button>
       </div>
@@ -59,20 +59,20 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Dashboard Overview</h2>
-        <p className="text-muted-foreground">Welcome back! Here's what's happening with {hotel.name}.</p>
+        <h2 className="text-3xl font-bold tracking-tight">Resumen del Panel</h2>
+        <p className="text-muted-foreground">¡Hola de nuevo! Aquí tienes un resumen de {hotel.name}.</p>
       </div>
 
       {/* Stats Grid */}
       <div className="grid gap-4 md:grid-cols-2">
         <StatsCard
-          title="Total Links"
+          title="Total de Links"
           value={links?.length || 0}
           icon={LinkIcon}
           className="hover:shadow-lg transition-shadow"
         />
         <StatsCard
-          title="Active Links"
+          title="Links Activos"
           value={activeLinksCount}
           icon={Activity}
           className="hover:shadow-lg transition-shadow"
@@ -85,11 +85,11 @@ export default async function DashboardPage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Guest Portal Preview</CardTitle>
-                <CardDescription>Your live guest-facing portal</CardDescription>
+                <CardTitle>Vista Previa del Portal</CardTitle>
+                <CardDescription>Tu portal de huéspedes en vivo</CardDescription>
               </div>
               <Badge variant="secondary" className="bg-green-100 text-green-700">
-                Live
+                En Vivo
               </Badge>
             </div>
           </CardHeader>
@@ -112,11 +112,11 @@ export default async function DashboardPage() {
                 ))}
                 {activeLinksCount > 3 && (
                   <p className="text-xs text-center text-muted-foreground pt-2">
-                    +{activeLinksCount - 3} more links
+                    +{activeLinksCount - 3} links más
                   </p>
                 )}
                 {activeLinksCount === 0 && (
-                  <p className="text-xs text-center text-muted-foreground pt-2">No links added yet.</p>
+                  <p className="text-xs text-center text-muted-foreground pt-2">Aún no has agregado links.</p>
                 )}
               </div>
             </div>
@@ -124,11 +124,11 @@ export default async function DashboardPage() {
               <Button asChild className="flex-1">
                 <a href={portalUrl} target="_blank" rel="noopener noreferrer">
                   <Eye className="mr-2 h-4 w-4" />
-                  Preview Portal
+                  Ver Portal
                 </a>
               </Button>
               <Button variant="outline" asChild className="flex-1 bg-transparent">
-                <Link href="/dashboard/links">Manage Links</Link>
+                <Link href="/dashboard/links">Gestionar Links</Link>
               </Button>
             </div>
           </CardContent>
@@ -141,27 +141,27 @@ export default async function DashboardPage() {
       {/* Quick Actions */}
       <Card>
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Common tasks to manage your hotel portal</CardDescription>
+          <CardTitle>Acciones Rápidas</CardTitle>
+          <CardDescription>Tareas comunes para gestionar tu portal</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-3">
             <Button variant="outline" asChild className="justify-start bg-transparent">
               <Link href="/dashboard/links">
                 <LinkIcon className="mr-2 h-4 w-4" />
-                Add New Link
+                Nuevo Link
               </Link>
             </Button>
             <Button variant="outline" asChild className="justify-start bg-transparent">
               <Link href="/dashboard/activities">
                 <Activity className="mr-2 h-4 w-4" />
-                Add Activity
+                Nueva Actividad
               </Link>
             </Button>
             <Button variant="outline" asChild className="justify-start bg-transparent">
               <Link href="/dashboard/settings">
                 <Eye className="mr-2 h-4 w-4" />
-                Customize Design
+                Personalizar Diseño
               </Link>
             </Button>
           </div>

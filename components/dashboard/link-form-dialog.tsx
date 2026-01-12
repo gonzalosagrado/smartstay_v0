@@ -51,10 +51,10 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
     try {
       if (isEditing) {
         updateLink(link.id, data)
-        toast.success("Link updated successfully")
+        toast.success("Link actualizado correctamente")
       } else {
         addLink(data)
-        toast.success("Link created successfully")
+        toast.success("Link creado correctamente")
       }
       setOpen(false)
       form.reset()
@@ -69,15 +69,15 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
         {trigger || (
           <Button>
             <Plus className="mr-2 h-4 w-4" />
-            Add Link
+            Nuevo Link
           </Button>
         )}
       </DialogTrigger>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Link" : "Create New Link"}</DialogTitle>
+          <DialogTitle>{isEditing ? "Editar Link" : "Crear Nuevo Link"}</DialogTitle>
           <DialogDescription>
-            {isEditing ? "Update the link details below." : "Add a new link to your guest portal."}
+            {isEditing ? "Actualiza los detalles del link." : "Agrega un nuevo link a tu portal de huéspedes."}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -88,9 +88,9 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>Título</FormLabel>
                     <FormControl>
-                      <Input placeholder="WiFi Password" {...field} />
+                      <Input placeholder="Contraseña de WiFi" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,7 +101,7 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>Categoría</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
@@ -109,9 +109,9 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="hotel">Hotel Services</SelectItem>
-                        <SelectItem value="activities">Activities</SelectItem>
-                        <SelectItem value="contact">Contact</SelectItem>
+                        <SelectItem value="hotel">Servicios del Hotel</SelectItem>
+                        <SelectItem value="activities">Actividades</SelectItem>
+                        <SelectItem value="contact">Contacto</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -125,11 +125,11 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
               name="url"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL or Content</FormLabel>
+                  <FormLabel>URL o Contenido</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://... or WiFi Password" {...field} />
+                    <Input placeholder="https://... o Contraseña123" {...field} />
                   </FormControl>
-                  <FormDescription>The destination URL or text content (e.g. '1234')</FormDescription>
+                  <FormDescription>La URL de destino o el texto a copiar.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -140,10 +140,10 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description (Optional)</FormLabel>
+                  <FormLabel>Descripción (Opcional)</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Brief description of what this link provides..."
+                      placeholder="Breve descripción de lo que ofrece este link..."
                       className="resize-none"
                       {...field}
                     />
@@ -158,11 +158,11 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
               name="icon"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Icon Name (Optional)</FormLabel>
+                  <FormLabel>Nombre del Ícono (Lucide)</FormLabel>
                   <FormControl>
                     <Input placeholder="Wifi, Phone, etc." {...field} />
                   </FormControl>
-                  <FormDescription>Lucide icon name (e.g., Wifi, Phone, Mail)</FormDescription>
+                  <FormDescription>Nombre del ícono de la librería Lucide.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -174,8 +174,8 @@ export function LinkFormDialog({ link, trigger }: LinkFormDialogProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel className="text-base">Active</FormLabel>
-                    <FormDescription>Make this link visible to guests</FormDescription>
+                    <FormLabel className="text-base">Activo</FormLabel>
+                    <FormDescription>Hacer visible este link para los huéspedes</FormDescription>
                   </div>
                   <FormControl>
                     <Switch checked={field.value} onCheckedChange={field.onChange} />

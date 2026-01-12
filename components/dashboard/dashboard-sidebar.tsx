@@ -17,11 +17,11 @@ import {
 import { useDashboard } from "@/contexts/dashboard-context"
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Links", href: "/dashboard/links", icon: LinkIcon },
-  { name: "Activities", href: "/dashboard/activities", icon: CloudRain },
-  { name: "Branding", href: "/dashboard/branding", icon: Palette },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  { name: "Inicio", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Mis Links", href: "/dashboard/links", icon: LinkIcon },
+  { name: "Actividades", href: "/dashboard/activities", icon: CloudRain },
+  // { name: "Branding", href: "/dashboard/branding", icon: Palette }, // Removed as it's not a page anymore, or merged into Settings
+  { name: "Configuración", href: "/dashboard/settings", icon: Settings },
 ]
 
 export function DashboardSidebar() {

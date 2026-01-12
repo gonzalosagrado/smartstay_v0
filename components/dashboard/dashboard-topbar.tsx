@@ -14,6 +14,8 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { toast } from "sonner"
 import { useDashboard } from "@/contexts/dashboard-context"
 
 export function DashboardTopbar() {
@@ -58,13 +60,23 @@ export function DashboardTopbar() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/dashboard/settings" className="cursor-pointer">
+                Mi Perfil
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => toast.info("Próximamente", { description: "El módulo de pagos estará disponible pronto." })} className="cursor-pointer">
+              Pagos
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <a href="mailto:soporte@smartstay.app" className="cursor-pointer">
+                Soporte
+              </a>
+            </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive cursor-pointer" onClick={handleLogout}>
               <LogOut className="mr-2 h-4 w-4" />
-              Log out
+              Cerrar Sesión
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -107,17 +107,17 @@ export default function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Hotel Settings</h2>
-        <p className="text-muted-foreground">Manage your property details and public profile.</p>
+        <h2 className="text-3xl font-bold tracking-tight">Configuración</h2>
+        <p className="text-muted-foreground">Administra los detalles de tu propiedad y perfil público.</p>
       </div>
 
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
             <Building className="h-5 w-5" />
-            <CardTitle>Hotel Profile</CardTitle>
+            <CardTitle>Perfil del Hotel</CardTitle>
           </div>
-          <CardDescription>This information will be displayed on your guest portal.</CardDescription>
+          <CardDescription>Esta información se mostrará en tu portal de huéspedes.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -129,9 +129,9 @@ export default function SettingsPage() {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Hotel Name</FormLabel>
+                      <FormLabel>Nombre del Hotel</FormLabel>
                       <FormControl>
-                        <Input placeholder="Grand Hotel" {...field} />
+                        <Input placeholder="Gran Hotel Bariloche" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -143,9 +143,9 @@ export default function SettingsPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Public Contact Email</FormLabel>
+                      <FormLabel>Email de Contacto</FormLabel>
                       <FormControl>
-                        <Input placeholder="contact@grandhotel.com" {...field} />
+                        <Input placeholder="contacto@hotel.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -157,9 +157,9 @@ export default function SettingsPage() {
                   name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
+                      <FormLabel>Número de Teléfono</FormLabel>
                       <FormControl>
-                        <Input placeholder="+1 234 567 890" {...field} />
+                        <Input placeholder="+54 9 294 4123456" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -171,9 +171,9 @@ export default function SettingsPage() {
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Address</FormLabel>
+                      <FormLabel>Dirección</FormLabel>
                       <FormControl>
-                        <Input placeholder="123 Main St, City" {...field} />
+                        <Input placeholder="Av. Bustillo 1500, Bariloche" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -186,10 +186,10 @@ export default function SettingsPage() {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>Descripción</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="A brief description of your hotel..."
+                        placeholder="Una breve descripción de tu hotel..."
                         className="resize-none"
                         {...field}
                       />
@@ -204,11 +204,11 @@ export default function SettingsPage() {
                 name="welcomeMessage"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Welcome Message</FormLabel>
+                    <FormLabel>Mensaje de Bienvenida</FormLabel>
                     <FormControl>
-                      <Input placeholder="Welcome to our hotel! We hope you enjoy your stay." {...field} />
+                      <Input placeholder="¡Bienvenidos a nuestro hotel! Esperamos que disfruten su estadía." {...field} />
                     </FormControl>
-                    <FormDescription>Displayed at the top of the guest portal.</FormDescription>
+                    <FormDescription>Se muestra en la parte superior del portal.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -220,27 +220,29 @@ export default function SettingsPage() {
                   name="primaryColor"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Primary Color (Hex)</FormLabel>
-                      <div className="flex gap-2">
-                        <div
-                          className="w-10 h-10 rounded border shadow-sm"
-                          style={{ backgroundColor: field.value }}
-                        />
-                        <FormControl>
-                          <Input placeholder="#3B82F6" {...field} />
-                        </FormControl>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
+                      <FormItem>
+                        <FormLabel>Color Principal (Hex)</FormLabel>
+                        <div className="flex gap-2">
+                          <div
+                            className="w-10 h-10 rounded border shadow-sm"
+                            style={{ backgroundColor: field.value }}
+                          />
+                          <FormControl>
+                            <Input placeholder="#3B82F6" {...field} />
+                          </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
                   )}
                 />
 
-                <FormField
-                  control={form.control}
-                  name="logo"
-                  render={({ field }) => (
+                      <FormField
+                        control={form.control}
+                        name="logo"
+                        render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Logo URL (Optional)</FormLabel>
+                  <FormItem>
+                      <FormLabel>Logo URL (Opcional)</FormLabel>
                       <FormControl>
                         <Input placeholder="https://..." {...field} />
                       </FormControl>
@@ -255,12 +257,12 @@ export default function SettingsPage() {
                   {isSaving ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Saving...
+                      Guardando...
                     </>
                   ) : (
                     <>
                       <Save className="mr-2 h-4 w-4" />
-                      Save Changes
+                      Guardar Cambios
                     </>
                   )}
                 </Button>
@@ -268,8 +270,8 @@ export default function SettingsPage() {
 
             </form>
           </Form>
-        </CardContent>
-      </Card>
-    </div>
-  )
+            </CardContent>
+          </Card>
+        </div>
+        )
 }
